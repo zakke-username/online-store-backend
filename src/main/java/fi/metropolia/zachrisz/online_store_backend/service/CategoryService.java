@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -22,5 +23,10 @@ public class CategoryService {
         return categoryRepository.findAll(Sort.by("id")).stream()
                 .map(CategoryResponse::from)
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<CategoryResponse> findById(Integer id) {
+        return categoryRepository.findById(id).map(CategoryResponse::from);
     }
 }
