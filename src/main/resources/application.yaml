@@ -10,5 +10,14 @@ spring:
   sql:
     init:
       mode: never
+  jpa:
+    # Database access happens only inside service transactions, not while the JSON response is written.
+    open-in-view: false
+    hibernate:
+      # Check at startup that the entities match the existing tables; never change the schema.
+      ddl-auto: validate
+      naming:
+        # Use table and column names exactly as written in the entities (e.g. "ProductCategories").
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 server:
   port: 8081
