@@ -1,3 +1,14 @@
 spring:
   application:
     name: online-store-backend
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: jdbc:mariadb://localhost:3306/${DB_NAME:online_store}
+    username: ${DB_USERNAME:online_store_app}
+    password: ${DB_PASSWORD}
+  sql:
+    init:
+      mode: never
+server:
+  port: 8081
