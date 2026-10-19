@@ -1,5 +1,6 @@
 package fi.metropolia.zachrisz.online_store_backend.repository;
 
+import fi.metropolia.zachrisz.online_store_backend.dto.PopularProductResponse;
 import fi.metropolia.zachrisz.online_store_backend.entity.Product;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.domain.Page;
@@ -38,4 +39,20 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     Optional<Product> findForUpdateById(Integer id);
+
+    @Query(nativeQuery = true, value = """
+            SELECT pc.id, pc.name, pc.description, pc.price,
+                   pc.stock_quantity AS stockQuantity, pc.category_id AS categoryId,
+                   pc.category_name AS categoryName,
+                   CAST(SUM(i.quantity) AS SIGNED) AS unitsSold
+            FROM ProductCatalog pc
+            JOIN OrderItems i ON i.product_id = pc.id
+            JOIN Orders o ON o.id = i.order_id
+            WHERE o.order_date >= NOW() - INTERVAL :days DAY
+              AND o.status <> 'CANCELLED'
+            GROUP BY pc.id, pc.name, pc.description, pc.price, pc.stock_quantity, pc.category_id, pc.category_name
+            ORDER BY unitsSold DESC, pc.id
+            LIMIT :limit
+            """)
+    List<PopularProductResponse> findPopular(int days, int limit);
 }

@@ -7,7 +7,8 @@ public record CustomerResponse(
         String firstName,
         String lastName,
         String email,
-        String phone
+        String phone,
+        int version
 ) {
 
     public static CustomerResponse from(Customer customer) {
@@ -16,7 +17,8 @@ public record CustomerResponse(
                 customer.getFirstName(),
                 customer.getLastName(),
                 customer.getEmail(),
-                customer.getPhone()
+                customer.getPhone(),
+                customer.getVersion()
         );
     }
 }

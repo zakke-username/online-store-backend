@@ -7,7 +7,8 @@ public record AddressResponse(
         String streetAddress,
         String postalCode,
         String city,
-        String country
+        String country,
+        int version
 ) {
 
     public static AddressResponse from(CustomerAddress address) {
@@ -16,7 +17,8 @@ public record AddressResponse(
                 address.getStreetAddress(),
                 address.getPostalCode(),
                 address.getCity(),
-                address.getCountry()
+                address.getCountry(),
+                address.getVersion()
         );
     }
 }

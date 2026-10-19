@@ -1,5 +1,6 @@
 package fi.metropolia.zachrisz.online_store_backend.service;
 
+import fi.metropolia.zachrisz.online_store_backend.dto.PopularProductResponse;
 import fi.metropolia.zachrisz.online_store_backend.dto.ProductResponse;
 import fi.metropolia.zachrisz.online_store_backend.repository.CategoryRepository;
 import fi.metropolia.zachrisz.online_store_backend.repository.ProductRepository;
@@ -28,6 +29,11 @@ public class ProductService {
     @Transactional(readOnly = true)
     public Optional<ProductResponse> findById(Integer id) {
         return productRepository.findById(id).map(ProductResponse::from);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PopularProductResponse> findPopular(int days, int limit) {
+        return productRepository.findPopular(days, limit);
     }
 
     @Transactional(readOnly = true)

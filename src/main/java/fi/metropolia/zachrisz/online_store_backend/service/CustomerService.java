@@ -51,12 +51,22 @@ public class CustomerService {
     @Transactional
     public CustomerResponse update(Integer customerId, CustomerRequest request) {
         Customer customer = findCustomer(customerId);
+        // Optimistic locking: if the customer has been saved since the client read it, saving the client's
+        // copy would undo those changes
+        if (request.version() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "version is required");
+        }
+        if (request.version() != customer.getVersion()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Customer " + customerId
+                    + " has changed since version " + request.version() + "; get it again and retry");
+        }
         if (customerRepository.existsByEmailAndIdNot(request.email(), customerId)) {
             throw emailInUse(request.email());
         }
 
         copyFields(request, customer);
-        return CustomerResponse.from(customer);
+        // Flushing runs the UPDATE now, so the response has the new version
+        return CustomerResponse.from(customerRepository.saveAndFlush(customer));
     }
 
     @Transactional

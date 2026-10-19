@@ -1,6 +1,7 @@
 package fi.metropolia.zachrisz.online_store_backend.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Generated;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -20,7 +21,9 @@ public class Order {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @Column(name = "order_date", nullable = false)
+    // Set by the database (DEFAULT CURRENT_TIMESTAMP). Hibernate leaves it out of the INSERT and reads it back.
+    @Generated
+    @Column(name = "order_date", nullable = false, updatable = false)
     private LocalDateTime orderDate;
 
     @Column(name = "delivery_date")
@@ -77,10 +80,6 @@ public class Order {
 
     public LocalDateTime getOrderDate() {
         return orderDate;
-    }
-
-    public void setOrderDate(LocalDateTime orderDate) {
-        this.orderDate = orderDate;
     }
 
     public LocalDateTime getDeliveryDate() {

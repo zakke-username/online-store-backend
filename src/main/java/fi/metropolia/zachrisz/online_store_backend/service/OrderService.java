@@ -22,8 +22,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -97,8 +95,6 @@ public class OrderService {
         Order order = new Order();
         order.setCustomer(customer);
         order.setShippingAddress(address);
-        // DATETIME stores whole seconds
-        order.setOrderDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         order.setStatus(OrderStatus.NEW);
 
         for (OrderRequest.Item item : request.items()) {

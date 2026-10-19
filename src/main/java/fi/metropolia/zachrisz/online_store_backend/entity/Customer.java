@@ -22,11 +22,20 @@ public class Customer {
     @Column(name = "phone", length = 30)
     private String phone;
 
+    // Optimistic locking: Hibernate adds "AND version = ?" to every UPDATE and increases the version
+    @Version
+    @Column(name = "version", nullable = false)
+    private int version;
+
     public Customer() {
     }
 
     public Integer getId() {
         return id;
+    }
+
+    public int getVersion() {
+        return version;
     }
 
     public String getFirstName() {
