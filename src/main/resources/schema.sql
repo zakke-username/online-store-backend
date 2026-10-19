@@ -1,12 +1,12 @@
-DROP TABLE IF EXISTS OrderLog;
-DROP TABLE IF EXISTS OrderItems;
-DROP TABLE IF EXISTS Orders;
-DROP TABLE IF EXISTS Products;
-DROP TABLE IF EXISTS ProductCategories;
-DROP TABLE IF EXISTS SupplierAddresses;
-DROP TABLE IF EXISTS CustomerAddresses;
-DROP TABLE IF EXISTS Suppliers;
-DROP TABLE IF EXISTS Customers;
+DROP TABLE IF EXISTS OrderLog$$
+DROP TABLE IF EXISTS OrderItems$$
+DROP TABLE IF EXISTS Orders$$
+DROP TABLE IF EXISTS Products$$
+DROP TABLE IF EXISTS ProductCategories$$
+DROP TABLE IF EXISTS SupplierAddresses$$
+DROP TABLE IF EXISTS CustomerAddresses$$
+DROP TABLE IF EXISTS Suppliers$$
+DROP TABLE IF EXISTS Customers$$
 
 CREATE TABLE Customers (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -16,7 +16,7 @@ CREATE TABLE Customers (
     phone VARCHAR(30),
     version INT NOT NULL DEFAULT 0,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+)$$
 
 CREATE TABLE Suppliers (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -25,7 +25,7 @@ CREATE TABLE Suppliers (
     phone VARCHAR(30),
     email VARCHAR(255),
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+)$$
 
 CREATE TABLE CustomerAddresses (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -38,7 +38,7 @@ CREATE TABLE CustomerAddresses (
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT fk_customeraddress_customer
         FOREIGN KEY (customer_id) REFERENCES Customers(id)
-);
+)$$
 
 CREATE TABLE SupplierAddresses (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -50,14 +50,14 @@ CREATE TABLE SupplierAddresses (
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT fk_supplieraddress_supplier
         FOREIGN KEY (supplier_id) REFERENCES Suppliers(id)
-);
+)$$
 
 CREATE TABLE ProductCategories (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     description TEXT,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+)$$
 
 CREATE TABLE Products (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -74,7 +74,7 @@ CREATE TABLE Products (
         FOREIGN KEY (category_id) REFERENCES ProductCategories(id),
     CONSTRAINT fk_product_supplier
         FOREIGN KEY (supplier_id) REFERENCES Suppliers(id)
-);
+)$$
 
 CREATE TABLE Orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -93,7 +93,7 @@ CREATE TABLE Orders (
         FOREIGN KEY (customer_id) REFERENCES Customers(id),
     CONSTRAINT fk_order_shipping_address
         FOREIGN KEY (shipping_address_id) REFERENCES CustomerAddresses(id)
-);
+)$$
 
 CREATE TABLE OrderItems (
     order_id INT NOT NULL,
@@ -108,7 +108,7 @@ CREATE TABLE OrderItems (
         FOREIGN KEY (order_id) REFERENCES Orders(id),
     CONSTRAINT fk_orderitem_product
         FOREIGN KEY (product_id) REFERENCES Products(id)
-);
+)$$
 
 CREATE TABLE OrderLog (
     order_id INT PRIMARY KEY,
@@ -116,28 +116,28 @@ CREATE TABLE OrderLog (
     placed_at DATETIME NOT NULL,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT chk_orderlog_total CHECK (total >= 0)
-);
+)$$
 
 CREATE TRIGGER trg_orders_delivery_date BEFORE UPDATE ON Orders FOR EACH ROW
-SET NEW.delivery_date = IF(NEW.status = 'DELIVERED' AND OLD.status <> 'DELIVERED', NOW(), NEW.delivery_date);
+SET NEW.delivery_date = IF(NEW.status = 'DELIVERED' AND OLD.status <> 'DELIVERED', NOW(), NEW.delivery_date)$$
 
 CREATE TRIGGER trg_orders_log_insert AFTER INSERT ON Orders FOR EACH ROW
-INSERT INTO OrderLog (order_id, total, placed_at) VALUES (NEW.id, 0, NEW.order_date);
+INSERT INTO OrderLog (order_id, total, placed_at) VALUES (NEW.id, 0, NEW.order_date)$$
 
 CREATE TRIGGER trg_orderitems_log_insert AFTER INSERT ON OrderItems FOR EACH ROW
 UPDATE OrderLog
 SET total = (SELECT COALESCE(SUM(quantity * unit_price), 0) FROM OrderItems WHERE order_id = NEW.order_id)
-WHERE order_id = NEW.order_id;
+WHERE order_id = NEW.order_id$$
 
 CREATE TRIGGER trg_orderitems_log_update AFTER UPDATE ON OrderItems FOR EACH ROW
 UPDATE OrderLog
 SET total = (SELECT COALESCE(SUM(quantity * unit_price), 0) FROM OrderItems WHERE order_id = NEW.order_id)
-WHERE order_id = NEW.order_id;
+WHERE order_id = NEW.order_id$$
 
 CREATE TRIGGER trg_orderitems_log_delete AFTER DELETE ON OrderItems FOR EACH ROW
 UPDATE OrderLog
 SET total = (SELECT COALESCE(SUM(quantity * unit_price), 0) FROM OrderItems WHERE order_id = OLD.order_id)
-WHERE order_id = OLD.order_id;
+WHERE order_id = OLD.order_id$$
 
 CREATE OR REPLACE VIEW OrderTotals AS
 SELECT o.id AS order_id,
@@ -148,7 +148,7 @@ SELECT o.id AS order_id,
        COALESCE(SUM(i.quantity * i.unit_price), 0) AS total
 FROM Orders o
 LEFT JOIN OrderItems i ON i.order_id = o.id
-GROUP BY o.id, o.customer_id, o.order_date, o.status;
+GROUP BY o.id, o.customer_id, o.order_date, o.status$$
 
 CREATE OR REPLACE VIEW ProductCatalog AS
 SELECT p.id,
@@ -159,4 +159,55 @@ SELECT p.id,
        p.category_id,
        c.name AS category_name
 FROM Products p
-LEFT JOIN ProductCategories c ON c.id = p.category_id;
+LEFT JOIN ProductCategories c ON c.id = p.category_id$$
+
+CREATE OR REPLACE PROCEDURE cancel_order(IN p_customer_id INT, IN p_order_id INT, OUT p_cancelled BOOLEAN)
+BEGIN
+    UPDATE Orders
+    SET status = 'CANCELLED'
+    WHERE id = p_order_id
+      AND customer_id = p_customer_id
+      AND status IN ('NEW', 'PROCESSING');
+
+    SET p_cancelled = ROW_COUNT() > 0;
+
+    IF p_cancelled THEN
+        UPDATE Products p
+        JOIN OrderItems i ON i.product_id = p.id
+        SET p.stock_quantity = p.stock_quantity + i.quantity
+        WHERE i.order_id = p_order_id;
+    END IF;
+END$$
+
+CREATE OR REPLACE PROCEDURE cancel_expired_orders(IN p_days INT)
+BEGIN
+    DECLARE v_done BOOLEAN DEFAULT FALSE;
+    DECLARE v_order_id, v_customer_id INT;
+    DECLARE v_cancelled BOOLEAN;
+    DECLARE expired CURSOR FOR
+        SELECT id, customer_id
+        FROM Orders
+        WHERE status = 'NEW'
+          AND order_date < NOW() - INTERVAL p_days DAY
+        FOR UPDATE;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET v_done = TRUE;
+
+    OPEN expired;
+    expire_loop: LOOP
+        FETCH expired INTO v_order_id, v_customer_id;
+        IF v_done THEN
+            LEAVE expire_loop;
+        END IF;
+        CALL cancel_order(v_customer_id, v_order_id, v_cancelled);
+    END LOOP;
+    CLOSE expired;
+END$$
+
+CREATE OR REPLACE EVENT expire_orders
+ON SCHEDULE EVERY 1 HOUR STARTS CURRENT_TIMESTAMP + INTERVAL 1 HOUR
+DO BEGIN
+    SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+    START TRANSACTION;
+    CALL cancel_expired_orders(7);
+    COMMIT;
+END$$

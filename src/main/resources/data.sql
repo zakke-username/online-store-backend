@@ -13,7 +13,7 @@ INSERT INTO ProductCategories (id, name, description) VALUES
     (10, 'Office Supplies', 'Stationery, office furniture and workplace equipment.'),
     (11, 'Pet Supplies', 'Food, toys, beds and care products for pets.'),
     (12, 'Food & Beverages', 'Coffee, tea, snacks and Nordic pantry products.'),
-    (13, 'Gift Cards', 'Digital and physical gift cards. Coming soon.');
+    (13, 'Gift Cards', 'Digital and physical gift cards. Coming soon.')$$
 
 INSERT INTO Suppliers (id, name, contact_name, phone, email) VALUES
     (1, 'Pohjola Electronics OÜ', 'Quang Pham', '+372 669 7917', 'orders@pohjola-electronics.example.com'),
@@ -55,7 +55,7 @@ INSERT INTO Suppliers (id, name, contact_name, phone, email) VALUES
     (37, 'Ahti Wholesale Oy', 'Sami Hakala', '+358 9 653 1359', 'contact@ahti-wholesale.example.com'),
     (38, 'Revontuli Trading GmbH', 'Liam Müller', '+49 40 8678 4973', 'orders@revontuli-trading.example.com'),
     (39, 'Kallio Distribution Oy', 'Eero Toivonen', '+358 45 847 1557', 'sales@kallio-distribution.example.com'),
-    (40, 'Ilmatar Imports Oy', 'Antti Savolainen', '+358 9 667 3786', 'sales@ilmatar-imports.example.com');
+    (40, 'Ilmatar Imports Oy', 'Antti Savolainen', '+358 9 667 3786', 'sales@ilmatar-imports.example.com')$$
 
 INSERT INTO SupplierAddresses (id, supplier_id, street_address, postal_code, city, country) VALUES
     (1, 1, 'Peterburi tee 51-17', '14408', 'Tallinn', 'Estonia'),
@@ -109,7 +109,7 @@ INSERT INTO SupplierAddresses (id, supplier_id, street_address, postal_code, cit
     (49, 38, 'Hafenstraße 24', '21891', 'Hamburg', 'Germany'),
     (50, 39, 'Teollisuuskatu 23', '15840', 'Lahti', 'Finland'),
     (51, 40, 'Sorvaajankatu 18', '01400', 'Vantaa', 'Finland'),
-    (52, 40, 'Teollisuuskatu 14', '01400', 'Vantaa', 'Finland');
+    (52, 40, 'Teollisuuskatu 14', '01400', 'Vantaa', 'Finland')$$
 
 INSERT INTO Customers (id, first_name, last_name, email, phone) VALUES
     (1, 'Petri', 'Heinonen', 'petriheinonen@example.com', '+358 50 578 9445'),
@@ -311,7 +311,7 @@ INSERT INTO Customers (id, first_name, last_name, email, phone) VALUES
     (197, 'Jari', 'Heikkilä', 'jari.heikkila@example.com', '+358 40 582 6230'),
     (198, 'Riikka', 'Seppälä', 'riikka.seppala338@example.org', '+358 50 667 8033'),
     (199, 'Sanna', 'Kokkonen', 's.kokkonen@mail.example.com', '+358 50 490 4208'),
-    (200, 'Anni', 'Pitkänen', 'annipitkanen@example.org', NULL);
+    (200, 'Anni', 'Pitkänen', 'annipitkanen@example.org', NULL)$$
 
 INSERT INTO Customers (id, first_name, last_name, email, phone) VALUES
     (201, 'Erik', 'Andersson', 'erik.andersson48@example.com', '+358 45 862 6852'),
@@ -513,7 +513,7 @@ INSERT INTO Customers (id, first_name, last_name, email, phone) VALUES
     (397, 'Onni', 'Mustonen', 'onni.mustonen45@example.org', '+358 40 113 9869'),
     (398, 'Joonas', 'Sirola', 'joonas.sirola@example.com', '+358 45 567 6627'),
     (399, 'Joonas', 'Lindroos', 'joonas.lindroos@mail.example.com', '+358 50 134 4893'),
-    (400, 'Teemu', 'Salminen', 'teemu.salminen@mail.example.com', '+358 41 624 8323');
+    (400, 'Teemu', 'Salminen', 'teemu.salminen@mail.example.com', '+358 41 624 8323')$$
 
 INSERT INTO Customers (id, first_name, last_name, email, phone) VALUES
     (401, 'Elias', 'Räsänen', 'elias.rasanen37@example.org', '+358 46 345 1704'),
@@ -615,7 +615,7 @@ INSERT INTO Customers (id, first_name, last_name, email, phone) VALUES
     (497, 'Helmi', 'Grönroos', 'helmigronroos@mail.example.com', '+358 45 865 9695'),
     (498, 'Tiina', 'Heino', 'tiina_heino@mail.example.com', NULL),
     (499, 'Otto', 'Ojala', 'ottoojala@example.org', '+358 50 955 4965'),
-    (500, 'Mika', 'Manninen', 'mika.manninen@example.org', '+358 45 615 4271');
+    (500, 'Mika', 'Manninen', 'mika.manninen@example.org', '+358 45 615 4271')$$
 
 INSERT INTO CustomerAddresses (id, customer_id, street_address, postal_code, city, country) VALUES
     (1, 1, 'Kalevankatu 4 B 5', '60340', 'Seinäjoki', 'Finland'),
@@ -817,7 +817,7 @@ INSERT INTO CustomerAddresses (id, customer_id, street_address, postal_code, cit
     (197, 151, 'Mäntytie 48 B 21', '00430', 'Helsinki', 'Finland'),
     (198, 152, 'Tammitie 51 B 13', '28450', 'Pori', 'Finland'),
     (199, 153, 'Torikatu 12 B 11', '01350', 'Vantaa', 'Finland'),
-    (200, 153, 'Kuusikallionkuja 36 B 2', '13460', 'Hämeenlinna', 'Finland');
+    (200, 153, 'Kuusikallionkuja 36 B 2', '13460', 'Hämeenlinna', 'Finland')$$
 
 INSERT INTO CustomerAddresses (id, customer_id, street_address, postal_code, city, country) VALUES
     (201, 153, 'Tammitie 11 A 13', '02650', 'Espoo', 'Finland'),
@@ -1019,7 +1019,7 @@ INSERT INTO CustomerAddresses (id, customer_id, street_address, postal_code, cit
     (397, 306, 'Metsätie 53', '20900', 'Turku', 'Finland'),
     (398, 307, 'Pohjoisranta 6 C 21', '33730', 'Tampere', 'Finland'),
     (399, 307, 'Itäinen Rantakatu 23 D 14', '02520', 'Espoo', 'Finland'),
-    (400, 308, 'Haapatie 2 A 5', '65910', 'Vaasa', 'Finland');
+    (400, 308, 'Haapatie 2 A 5', '65910', 'Vaasa', 'Finland')$$
 
 INSERT INTO CustomerAddresses (id, customer_id, street_address, postal_code, city, country) VALUES
     (401, 308, 'Puistokatu 20 A 20', '01490', 'Vantaa', 'Finland'),
@@ -1221,7 +1221,7 @@ INSERT INTO CustomerAddresses (id, customer_id, street_address, postal_code, cit
     (597, 454, 'Itäinen Rantakatu 56', '20610', 'Turku', 'Finland'),
     (598, 455, 'Runebergintie 20', '00950', 'Helsinki', 'Finland'),
     (599, 456, 'Peterburi tee 117-34', '50382', 'Tartu', 'Estonia'),
-    (600, 456, 'Tartu mnt 103-17', '10716', 'Tallinn', 'Estonia');
+    (600, 456, 'Tartu mnt 103-17', '10716', 'Tallinn', 'Estonia')$$
 
 INSERT INTO CustomerAddresses (id, customer_id, street_address, postal_code, city, country) VALUES
     (601, 457, 'Läntinen Pitkäkatu 21', '02900', 'Espoo', 'Finland'),
@@ -1267,7 +1267,7 @@ INSERT INTO CustomerAddresses (id, customer_id, street_address, postal_code, cit
     (641, 486, 'Rantatie 3', '02160', 'Espoo', 'Finland'),
     (642, 486, 'Puistokatu 32 B 24', '13590', 'Hämeenlinna', 'Finland'),
     (643, 487, 'Hämeentie 4', '60420', 'Seinäjoki', 'Finland'),
-    (644, 488, 'Pajakatu 47', '65230', 'Vaasa', 'Finland');
+    (644, 488, 'Pajakatu 47', '65230', 'Vaasa', 'Finland')$$
 
 INSERT INTO Products (id, name, description, price, stock_quantity, category_id, supplier_id) VALUES
     (1, 'Nova 55-inch 4K Smart TV', '55-inch 4K UHD television with HDR support and built-in streaming apps.', 978.90, 166, 1, 2),
@@ -1469,7 +1469,7 @@ INSERT INTO Products (id, name, description, price, stock_quantity, category_id,
     (197, 'Kaste Hand Cream 75 ml', 'Rich hand cream for dry winter skin. Fragrance free.', 13.00, 40, 8, 37),
     (198, 'Lähde Hair Dryer', 'Ionic hair dryer with three heat settings. Fragrance free.', 81.99, 2, 8, 38),
     (199, 'Lähde Hand Cream 75 ml', 'Rich hand cream for dry winter skin. Fragrance free.', 16.90, 28, 8, 22),
-    (200, 'Kuulas Lip Balm', 'Nourishing lip balm with shea butter. Vegan formula.', 5.95, 31, 8, 22);
+    (200, 'Kuulas Lip Balm', 'Nourishing lip balm with shea butter. Vegan formula.', 5.95, 31, 8, 22)$$
 
 INSERT INTO Products (id, name, description, price, stock_quantity, category_id, supplier_id) VALUES
     (201, 'Niitty Watering Can 10 L', 'Ten-litre watering can with a detachable rose. Suitable for the Finnish climate.', 17.00, 243, 9, 37),
@@ -1571,7 +1571,7 @@ INSERT INTO Products (id, name, description, price, stock_quantity, category_id,
     (297, 'Kaamos Sea Salt 500 g', 'Coarse sea salt flakes. Best before date at least 6 months.', 3.95, 56, 12, 37),
     (298, 'Kaamos Oat Granola 750 g', 'Crunchy oat granola with berries and seeds.', 7.49, 68, 12, 37),
     (299, 'Mehevä Dark Roast Coffee Beans 1 kg', 'Whole coffee beans, dark roast with notes of cocoa. Gluten free.', 16.00, 24, 12, 39),
-    (300, 'Mehevä Honey 350 g', 'Raw honey from Finnish beekeepers.', 10.99, 54, 12, 35);
+    (300, 'Mehevä Honey 350 g', 'Raw honey from Finnish beekeepers.', 10.99, 54, 12, 35)$$
 
 INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address_id, status) VALUES
     (1, 51, '2024-01-01 15:37:08', '2024-01-03 20:58:38', 67, 'DELIVERED'),
@@ -1773,7 +1773,7 @@ INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address
     (197, 391, '2024-04-16 10:36:55', '2024-04-17 09:15:08', 513, 'DELIVERED'),
     (198, 284, '2024-04-16 17:51:14', '2024-04-22 17:49:03', 365, 'DELIVERED'),
     (199, 137, '2024-04-16 18:20:49', '2024-04-18 13:20:48', 180, 'DELIVERED'),
-    (200, 367, '2024-04-17 17:35:00', '2024-04-22 20:18:50', 477, 'DELIVERED');
+    (200, 367, '2024-04-17 17:35:00', '2024-04-22 20:18:50', 477, 'DELIVERED')$$
 
 INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address_id, status) VALUES
     (201, 189, '2024-04-17 18:46:50', '2024-04-19 20:11:23', 242, 'DELIVERED'),
@@ -1975,7 +1975,7 @@ INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address
     (397, 292, '2024-07-16 06:00:50', '2024-07-17 16:43:18', 379, 'DELIVERED'),
     (398, 79, '2024-07-16 10:43:33', NULL, 111, 'CANCELLED'),
     (399, 354, '2024-07-17 20:24:01', '2024-07-20 10:27:27', 463, 'DELIVERED'),
-    (400, 488, '2024-07-18 09:46:39', '2024-07-22 17:28:25', 644, 'DELIVERED');
+    (400, 488, '2024-07-18 09:46:39', '2024-07-22 17:28:25', 644, 'DELIVERED')$$
 
 INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address_id, status) VALUES
     (401, 376, '2024-07-19 10:17:07', '2024-07-24 19:59:43', 490, 'DELIVERED'),
@@ -2177,7 +2177,7 @@ INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address
     (597, 420, '2024-10-23 10:40:18', '2024-10-24 08:10:09', 551, 'DELIVERED'),
     (598, 290, '2024-10-23 18:34:58', '2024-10-25 10:19:28', 375, 'DELIVERED'),
     (599, 363, '2024-10-23 22:04:41', '2024-10-29 12:08:06', 473, 'DELIVERED'),
-    (600, 394, '2024-10-23 22:33:42', '2024-10-26 14:55:51', 517, 'DELIVERED');
+    (600, 394, '2024-10-23 22:33:42', '2024-10-26 14:55:51', 517, 'DELIVERED')$$
 
 INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address_id, status) VALUES
     (601, 430, '2024-10-23 22:37:50', '2024-10-26 15:55:13', 566, 'DELIVERED'),
@@ -2379,7 +2379,7 @@ INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address
     (797, 9, '2024-12-03 22:27:23', '2024-12-08 08:59:50', 13, 'DELIVERED'),
     (798, 78, '2024-12-04 07:41:01', '2024-12-10 15:50:26', 108, 'DELIVERED'),
     (799, 98, '2024-12-04 20:25:37', '2024-12-09 18:42:45', 134, 'DELIVERED'),
-    (800, 437, '2024-12-05 10:39:46', '2024-12-09 08:42:27', 576, 'DELIVERED');
+    (800, 437, '2024-12-05 10:39:46', '2024-12-09 08:42:27', 576, 'DELIVERED')$$
 
 INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address_id, status) VALUES
     (801, 299, '2024-12-06 06:11:55', '2024-12-12 09:06:59', 389, 'DELIVERED'),
@@ -2581,7 +2581,7 @@ INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address
     (997, 308, '2025-01-27 23:34:14', '2025-01-28 13:24:45', 400, 'DELIVERED'),
     (998, 146, '2025-01-28 21:02:18', '2025-02-01 08:20:44', 191, 'DELIVERED'),
     (999, 173, '2025-01-29 12:51:53', '2025-01-30 13:15:35', 225, 'DELIVERED'),
-    (1000, 308, '2025-02-01 09:53:20', '2025-02-04 11:35:54', 400, 'DELIVERED');
+    (1000, 308, '2025-02-01 09:53:20', '2025-02-04 11:35:54', 400, 'DELIVERED')$$
 
 INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address_id, status) VALUES
     (1001, 157, '2025-02-01 21:28:46', '2025-02-07 16:51:43', 205, 'DELIVERED'),
@@ -2783,7 +2783,7 @@ INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address
     (1197, 218, '2025-05-03 19:03:53', '2025-05-04 13:40:36', 279, 'DELIVERED'),
     (1198, 374, '2025-05-03 21:32:45', '2025-05-04 11:10:16', 488, 'DELIVERED'),
     (1199, 240, '2025-05-04 15:22:20', '2025-05-09 15:44:32', 308, 'DELIVERED'),
-    (1200, 137, '2025-05-05 21:29:35', '2025-05-10 14:57:37', 180, 'DELIVERED');
+    (1200, 137, '2025-05-05 21:29:35', '2025-05-10 14:57:37', 180, 'DELIVERED')$$
 
 INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address_id, status) VALUES
     (1201, 247, '2025-05-06 19:58:07', '2025-05-07 10:40:04', 317, 'DELIVERED'),
@@ -2985,7 +2985,7 @@ INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address
     (1397, 488, '2025-07-12 22:33:59', '2025-07-17 12:00:06', 644, 'DELIVERED'),
     (1398, 154, '2025-07-13 12:46:23', '2025-07-17 09:26:49', 202, 'DELIVERED'),
     (1399, 208, '2025-07-13 15:33:36', '2025-07-16 08:27:23', 268, 'DELIVERED'),
-    (1400, 149, '2025-07-13 16:56:31', NULL, 195, 'CANCELLED');
+    (1400, 149, '2025-07-13 16:56:31', NULL, 195, 'CANCELLED')$$
 
 INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address_id, status) VALUES
     (1401, 286, '2025-07-13 18:10:45', '2025-07-14 09:05:04', 368, 'DELIVERED'),
@@ -3187,7 +3187,7 @@ INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address
     (1597, 182, '2025-09-20 01:42:26', '2025-09-26 16:13:00', 234, 'DELIVERED'),
     (1598, 199, '2025-09-20 08:14:53', '2025-09-21 19:27:08', 253, 'DELIVERED'),
     (1599, 421, '2025-09-20 11:43:06', '2025-09-25 18:09:34', 553, 'DELIVERED'),
-    (1600, 258, '2025-09-20 13:19:01', '2025-09-22 15:34:46', 330, 'DELIVERED');
+    (1600, 258, '2025-09-20 13:19:01', '2025-09-22 15:34:46', 330, 'DELIVERED')$$
 
 INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address_id, status) VALUES
     (1601, 328, '2025-09-20 19:16:04', '2025-09-25 08:16:12', 429, 'DELIVERED'),
@@ -3389,7 +3389,7 @@ INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address
     (1797, 470, '2025-11-21 12:11:46', '2025-11-27 20:57:26', 621, 'DELIVERED'),
     (1798, 193, '2025-11-21 21:24:39', '2025-11-27 14:09:42', 247, 'DELIVERED'),
     (1799, 75, '2025-11-22 07:37:45', '2025-11-25 12:35:35', 102, 'DELIVERED'),
-    (1800, 133, '2025-11-22 09:37:41', '2025-11-26 18:33:09', 175, 'DELIVERED');
+    (1800, 133, '2025-11-22 09:37:41', '2025-11-26 18:33:09', 175, 'DELIVERED')$$
 
 INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address_id, status) VALUES
     (1801, 98, '2025-11-22 15:24:36', '2025-11-28 17:39:10', 134, 'DELIVERED'),
@@ -3591,7 +3591,7 @@ INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address
     (1997, 206, '2025-12-20 13:53:30', '2025-12-22 09:18:46', 263, 'DELIVERED'),
     (1998, 318, '2025-12-20 22:22:30', '2025-12-26 16:34:23', 414, 'DELIVERED'),
     (1999, 470, '2025-12-20 22:59:24', '2025-12-22 14:26:03', 621, 'DELIVERED'),
-    (2000, 258, '2025-12-21 04:54:37', '2025-12-22 13:21:51', 330, 'DELIVERED');
+    (2000, 258, '2025-12-21 04:54:37', '2025-12-22 13:21:51', 330, 'DELIVERED')$$
 
 INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address_id, status) VALUES
     (2001, 286, '2025-12-21 15:21:23', '2025-12-25 10:32:49', 367, 'DELIVERED'),
@@ -3793,7 +3793,7 @@ INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address
     (2197, 9, '2026-02-04 11:22:23', '2026-02-10 13:30:01', 13, 'DELIVERED'),
     (2198, 98, '2026-02-04 14:46:07', '2026-02-08 20:53:33', 134, 'DELIVERED'),
     (2199, 374, '2026-02-04 22:13:50', NULL, 488, 'CANCELLED'),
-    (2200, 365, '2026-02-05 10:45:59', '2026-02-09 17:22:01', 475, 'DELIVERED');
+    (2200, 365, '2026-02-05 10:45:59', '2026-02-09 17:22:01', 475, 'DELIVERED')$$
 
 INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address_id, status) VALUES
     (2201, 260, '2026-02-05 16:23:05', '2026-02-10 08:58:16', 333, 'DELIVERED'),
@@ -3995,7 +3995,7 @@ INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address
     (2397, 331, '2026-04-20 09:43:14', '2026-04-24 13:40:52', 432, 'DELIVERED'),
     (2398, 80, '2026-04-20 14:27:24', NULL, 112, 'CANCELLED'),
     (2399, 397, '2026-04-20 18:28:09', '2026-04-23 13:50:11', 521, 'DELIVERED'),
-    (2400, 334, '2026-04-20 18:46:01', '2026-04-23 16:04:27', 436, 'DELIVERED');
+    (2400, 334, '2026-04-20 18:46:01', '2026-04-23 16:04:27', 436, 'DELIVERED')$$
 
 INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address_id, status) VALUES
     (2401, 245, '2026-04-20 19:16:20', '2026-04-23 18:34:06', 314, 'DELIVERED'),
@@ -4197,7 +4197,7 @@ INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address
     (2597, 398, '2026-06-18 20:34:36', '2026-06-24 13:47:03', 522, 'DELIVERED'),
     (2598, 158, '2026-06-18 22:41:13', '2026-06-20 20:15:31', 207, 'DELIVERED'),
     (2599, 304, '2026-06-19 20:07:21', '2026-06-25 10:30:56', 395, 'DELIVERED'),
-    (2600, 458, '2026-06-20 09:49:51', NULL, 602, 'CANCELLED');
+    (2600, 458, '2026-06-20 09:49:51', NULL, 602, 'CANCELLED')$$
 
 INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address_id, status) VALUES
     (2601, 67, '2026-06-20 13:58:51', '2026-06-23 09:13:19', 90, 'DELIVERED'),
@@ -4399,7 +4399,7 @@ INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address
     (2797, 119, '2026-08-20 17:31:31', '2026-08-21 16:05:26', 159, 'DELIVERED'),
     (2798, 126, '2026-08-20 17:37:57', '2026-08-24 09:24:11', 167, 'DELIVERED'),
     (2799, 183, '2026-08-21 12:31:20', '2026-08-26 18:00:26', 235, 'DELIVERED'),
-    (2800, 258, '2026-08-21 13:21:56', '2026-08-27 20:48:04', 330, 'DELIVERED');
+    (2800, 258, '2026-08-21 13:21:56', '2026-08-27 20:48:04', 330, 'DELIVERED')$$
 
 INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address_id, status) VALUES
     (2801, 81, '2026-08-21 16:03:04', '2026-08-26 11:07:03', 113, 'DELIVERED'),
@@ -4601,7 +4601,7 @@ INSERT INTO Orders (id, customer_id, order_date, delivery_date, shipping_address
     (2997, 398, '2026-10-17 23:40:15', NULL, 522, 'PROCESSING'),
     (2998, 488, '2026-10-18 01:47:16', NULL, 644, 'PROCESSING'),
     (2999, 84, '2026-10-18 06:04:17', NULL, 116, 'NEW'),
-    (3000, 154, '2026-10-18 08:06:28', NULL, 202, 'PROCESSING');
+    (3000, 154, '2026-10-18 08:06:28', NULL, 202, 'PROCESSING')$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1, 191, 2, 124.00),
@@ -4803,7 +4803,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (90, 119, 1, 16.99),
     (90, 188, 2, 23.90),
     (91, 128, 1, 162.00),
-    (91, 149, 2, 36.95);
+    (91, 149, 2, 36.95)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (91, 194, 1, 113.00),
@@ -5005,7 +5005,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (176, 111, 1, 30.90),
     (177, 186, 1, 40.00),
     (177, 211, 1, 128.00),
-    (177, 221, 1, 14.00);
+    (177, 221, 1, 14.00)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (178, 31, 1, 39.90),
@@ -5207,7 +5207,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (271, 137, 1, 63.99),
     (272, 66, 4, 69.99),
     (272, 68, 2, 50.95),
-    (273, 84, 2, 39.90);
+    (273, 84, 2, 39.90)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (273, 120, 1, 106.90),
@@ -5409,7 +5409,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (362, 227, 6, 58.95),
     (363, 107, 1, 345.99),
     (363, 120, 1, 106.90),
-    (364, 67, 1, 90.90);
+    (364, 67, 1, 90.90)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (364, 210, 1, 398.99),
@@ -5611,7 +5611,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (461, 79, 1, 31.95),
     (461, 248, 2, 14.95),
     (462, 137, 3, 63.99),
-    (462, 153, 1, 36.00);
+    (462, 153, 1, 36.00)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (463, 66, 1, 69.99),
@@ -5813,7 +5813,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (555, 116, 1, 153.00),
     (555, 224, 1, 33.95),
     (555, 241, 2, 8.99),
-    (556, 111, 1, 30.90);
+    (556, 111, 1, 30.90)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (556, 136, 2, 285.90),
@@ -6015,7 +6015,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (646, 68, 1, 50.95),
     (646, 190, 1, 7.95),
     (647, 86, 1, 25.99),
-    (648, 75, 1, 477.00);
+    (648, 75, 1, 477.00)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (648, 111, 1, 30.90),
@@ -6217,7 +6217,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (729, 266, 1, 104.90),
     (730, 51, 1, 44.99),
     (730, 144, 1, 46.99),
-    (730, 202, 3, 3.90);
+    (730, 202, 3, 3.90)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (731, 185, 1, 82.00),
@@ -6419,7 +6419,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (819, 283, 1, 4.99),
     (820, 31, 2, 39.90),
     (820, 116, 1, 153.00),
-    (820, 120, 1, 106.90);
+    (820, 120, 1, 106.90)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (821, 224, 1, 34.95),
@@ -6621,7 +6621,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (903, 210, 1, 339.14),
     (904, 254, 1, 106.00),
     (904, 285, 1, 7.90),
-    (905, 30, 1, 87.90);
+    (905, 30, 1, 87.90)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (905, 146, 2, 35.90),
@@ -6823,7 +6823,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (992, 43, 1, 40.90),
     (992, 144, 1, 46.99),
     (992, 235, 1, 67.90),
-    (993, 176, 2, 58.95);
+    (993, 176, 2, 58.95)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (994, 127, 2, 21.95),
@@ -7025,7 +7025,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1087, 95, 1, 17.99),
     (1087, 188, 1, 23.90),
     (1087, 216, 3, 58.99),
-    (1087, 221, 2, 14.90);
+    (1087, 221, 2, 14.90)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1087, 247, 1, 42.90),
@@ -7227,7 +7227,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1179, 68, 1, 50.95),
     (1179, 216, 1, 58.99),
     (1180, 134, 1, 49.99),
-    (1180, 283, 1, 4.99);
+    (1180, 283, 1, 4.99)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1181, 15, 1, 170.99),
@@ -7429,7 +7429,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1269, 29, 1, 348.00),
     (1270, 75, 1, 477.00),
     (1270, 107, 1, 364.00),
-    (1270, 255, 1, 8.99);
+    (1270, 255, 1, 8.99)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1271, 144, 1, 46.99),
@@ -7631,7 +7631,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1353, 94, 1, 23.90),
     (1354, 132, 1, 343.90),
     (1354, 152, 1, 23.90),
-    (1354, 175, 1, 18.00);
+    (1354, 175, 1, 18.00)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1354, 271, 3, 26.99),
@@ -7833,7 +7833,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1434, 111, 2, 30.90),
     (1434, 220, 1, 18.00),
     (1434, 247, 2, 42.90),
-    (1434, 283, 4, 4.99);
+    (1434, 283, 4, 4.99)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1435, 111, 2, 30.90),
@@ -8035,7 +8035,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1524, 247, 2, 42.90),
     (1525, 235, 3, 67.90),
     (1526, 26, 1, 720.90),
-    (1526, 116, 2, 153.00);
+    (1526, 116, 2, 153.00)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1526, 190, 1, 7.95),
@@ -8237,7 +8237,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1606, 186, 1, 40.00),
     (1606, 244, 2, 23.99),
     (1607, 92, 1, 25.99),
-    (1607, 203, 2, 47.90);
+    (1607, 203, 2, 47.90)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1608, 251, 1, 108.99),
@@ -8439,7 +8439,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1704, 222, 1, 106.00),
     (1705, 77, 3, 25.90),
     (1706, 86, 1, 25.99),
-    (1706, 148, 1, 308.00);
+    (1706, 148, 1, 308.00)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1706, 240, 1, 536.00),
@@ -8641,7 +8641,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1802, 144, 1, 46.99),
     (1802, 168, 1, 85.99),
     (1803, 113, 1, 66.00),
-    (1804, 72, 1, 78.00);
+    (1804, 72, 1, 78.00)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1804, 111, 3, 30.90),
@@ -8843,7 +8843,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1891, 270, 2, 119.00),
     (1892, 230, 2, 16.09),
     (1892, 266, 1, 92.80),
-    (1893, 94, 1, 23.90);
+    (1893, 94, 1, 23.90)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1893, 144, 1, 32.89),
@@ -9045,7 +9045,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1978, 5, 1, 35.95),
     (1978, 67, 1, 90.90),
     (1978, 79, 1, 32.00),
-    (1978, 186, 1, 40.00);
+    (1978, 186, 1, 40.00)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (1979, 11, 1, 208.90),
@@ -9247,7 +9247,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2066, 175, 1, 15.30),
     (2067, 186, 1, 34.00),
     (2068, 248, 2, 14.95),
-    (2068, 281, 3, 6.99);
+    (2068, 281, 3, 6.99)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2069, 103, 1, 52.00),
@@ -9449,7 +9449,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2152, 73, 1, 220.00),
     (2152, 85, 1, 35.00),
     (2152, 153, 1, 36.00),
-    (2153, 8, 1, 119.00);
+    (2153, 8, 1, 119.00)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2153, 94, 1, 23.90),
@@ -9651,7 +9651,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2240, 129, 1, 35.90),
     (2240, 190, 1, 7.95),
     (2240, 195, 1, 198.99),
-    (2241, 223, 3, 28.90);
+    (2241, 223, 3, 28.90)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2242, 202, 5, 3.90),
@@ -9853,7 +9853,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2327, 255, 2, 9.90),
     (2328, 210, 1, 398.99),
     (2329, 167, 1, 25.95),
-    (2330, 96, 3, 11.00);
+    (2330, 96, 3, 11.00)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2330, 152, 1, 23.90),
@@ -10055,7 +10055,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2416, 192, 1, 58.99),
     (2417, 31, 1, 39.90),
     (2417, 76, 1, 45.99),
-    (2417, 111, 1, 30.90);
+    (2417, 111, 1, 30.90)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2418, 190, 1, 7.95),
@@ -10257,7 +10257,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2508, 60, 1, 349.00),
     (2509, 190, 2, 7.95),
     (2510, 270, 1, 119.00),
-    (2511, 125, 3, 17.99);
+    (2511, 125, 3, 17.99)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2511, 265, 2, 11.90),
@@ -10459,7 +10459,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2609, 271, 1, 24.95),
     (2610, 111, 1, 30.90),
     (2610, 138, 1, 148.99),
-    (2610, 146, 1, 35.90);
+    (2610, 146, 1, 35.90)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2610, 222, 1, 106.00),
@@ -10661,7 +10661,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2697, 56, 2, 116.00),
     (2698, 101, 1, 200.99),
     (2698, 116, 1, 181.00),
-    (2698, 137, 5, 63.99);
+    (2698, 137, 5, 63.99)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2698, 162, 1, 25.95),
@@ -10863,7 +10863,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2785, 280, 2, 6.90),
     (2786, 76, 1, 49.99),
     (2786, 86, 2, 25.99),
-    (2786, 136, 1, 285.90);
+    (2786, 136, 1, 285.90)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2786, 280, 1, 6.90),
@@ -11065,7 +11065,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2865, 27, 3, 162.00),
     (2866, 66, 4, 69.99),
     (2866, 190, 1, 7.95),
-    (2866, 216, 1, 61.95);
+    (2866, 216, 1, 61.95)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2867, 89, 2, 33.95),
@@ -11267,7 +11267,7 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2949, 247, 2, 42.99),
     (2950, 46, 2, 74.90),
     (2950, 136, 1, 285.90),
-    (2950, 202, 1, 3.90);
+    (2950, 202, 1, 3.90)$$
 
 INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (2950, 280, 1, 6.90),
@@ -11371,4 +11371,12 @@ INSERT INTO OrderItems (order_id, product_id, quantity, unit_price) VALUES
     (3000, 109, 1, 29.00),
     (3000, 111, 1, 30.90),
     (3000, 186, 1, 40.00),
-    (3000, 270, 1, 119.00);
+    (3000, 270, 1, 119.00)$$
+
+UPDATE Orders
+SET order_date = order_date + INTERVAL DATEDIFF(NOW(), '2026-10-19') DAY,
+    delivery_date = delivery_date + INTERVAL DATEDIFF(NOW(), '2026-10-19') DAY$$
+
+UPDATE OrderLog l
+JOIN Orders o ON o.id = l.order_id
+SET l.placed_at = o.order_date$$

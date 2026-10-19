@@ -112,27 +112,19 @@ public class OrderService {
         return OrderResponse.from(orderRepository.save(order));
     }
 
+    // The cancel_order procedure (schema.sql) only cancels NEW and PROCESSING orders, and returns their stock
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public OrderResponse cancel(Integer customerId, Integer orderId) {
-        Order order = lockOrder(customerId, orderId);
+        boolean cancelled = orderRepository.cancelOrder(customerId, orderId);
 
-        if (order.getStatus() != OrderStatus.NEW && order.getStatus() != OrderStatus.PROCESSING) {
+        OrderResponse order = findById(customerId, orderId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Customer " + customerId + " has no order " + orderId));
+        if (!cancelled) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "Order " + orderId + " is " + order.getStatus() + " and can't be cancelled");
+                    "Order " + orderId + " is " + order.status() + " and can't be cancelled");
         }
-
-        Set<Integer> productIds = order.getItems().stream()
-                .map(item -> item.getProduct().getId())
-                .collect(Collectors.toSet());
-        Map<Integer, Product> products = lockProducts(productIds);
-
-        for (OrderItem item : order.getItems()) {
-            Product product = products.get(item.getProduct().getId());
-            product.setStockQuantity(product.getStockQuantity() + item.getQuantity());
-        }
-        order.setStatus(OrderStatus.CANCELLED);
-
-        return OrderResponse.from(order);
+        return order;
     }
 
     @Transactional(readOnly = true)
@@ -186,15 +178,12 @@ public class OrderService {
     }
 
     // Locking the order row means changes to the same order (cancelling it, changing its items) happen one
-    // at a time. The order is always locked before its products, so these transactions can't deadlock.
-    private Order lockOrder(Integer customerId, Integer orderId) {
-        return orderRepository.findForUpdateByIdAndCustomerId(orderId, customerId)
+    // at a time. The order is always locked before its products (cancel_order too), so these transactions
+    // can't deadlock.
+    private Order lockNewOrder(Integer customerId, Integer orderId) {
+        Order order = orderRepository.findForUpdateByIdAndCustomerId(orderId, customerId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Customer " + customerId + " has no order " + orderId));
-    }
-
-    private Order lockNewOrder(Integer customerId, Integer orderId) {
-        Order order = lockOrder(customerId, orderId);
         if (order.getStatus() != OrderStatus.NEW) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
                     "Order " + orderId + " is " + order.getStatus() + " and its items can't be changed");

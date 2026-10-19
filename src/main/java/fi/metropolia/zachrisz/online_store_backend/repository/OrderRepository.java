@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 
 import java.util.Optional;
 
@@ -35,6 +36,9 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     Optional<Order> findForUpdateByIdAndCustomerId(Integer id, Integer customerId);
+
+    @Procedure("cancel_order")
+    boolean cancelOrder(Integer customerId, Integer orderId);
 
     boolean existsByCustomerId(Integer customerId);
 
