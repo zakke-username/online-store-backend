@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS OrderLog;
 DROP TABLE IF EXISTS OrderItems;
 DROP TABLE IF EXISTS Orders;
 DROP TABLE IF EXISTS Products;
@@ -108,6 +109,35 @@ CREATE TABLE OrderItems (
     CONSTRAINT fk_orderitem_product
         FOREIGN KEY (product_id) REFERENCES Products(id)
 );
+
+CREATE TABLE OrderLog (
+    order_id INT PRIMARY KEY,
+    total DECIMAL(12,2) NOT NULL,
+    placed_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT chk_orderlog_total CHECK (total >= 0)
+);
+
+CREATE TRIGGER trg_orders_delivery_date BEFORE UPDATE ON Orders FOR EACH ROW
+SET NEW.delivery_date = IF(NEW.status = 'DELIVERED' AND OLD.status <> 'DELIVERED', NOW(), NEW.delivery_date);
+
+CREATE TRIGGER trg_orders_log_insert AFTER INSERT ON Orders FOR EACH ROW
+INSERT INTO OrderLog (order_id, total, placed_at) VALUES (NEW.id, 0, NEW.order_date);
+
+CREATE TRIGGER trg_orderitems_log_insert AFTER INSERT ON OrderItems FOR EACH ROW
+UPDATE OrderLog
+SET total = (SELECT COALESCE(SUM(quantity * unit_price), 0) FROM OrderItems WHERE order_id = NEW.order_id)
+WHERE order_id = NEW.order_id;
+
+CREATE TRIGGER trg_orderitems_log_update AFTER UPDATE ON OrderItems FOR EACH ROW
+UPDATE OrderLog
+SET total = (SELECT COALESCE(SUM(quantity * unit_price), 0) FROM OrderItems WHERE order_id = NEW.order_id)
+WHERE order_id = NEW.order_id;
+
+CREATE TRIGGER trg_orderitems_log_delete AFTER DELETE ON OrderItems FOR EACH ROW
+UPDATE OrderLog
+SET total = (SELECT COALESCE(SUM(quantity * unit_price), 0) FROM OrderItems WHERE order_id = OLD.order_id)
+WHERE order_id = OLD.order_id;
 
 CREATE OR REPLACE VIEW OrderTotals AS
 SELECT o.id AS order_id,
