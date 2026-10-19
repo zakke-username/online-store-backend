@@ -1,0 +1,13 @@
+package fi.metropolia.zachrisz.online_store_backend.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+// The maximum lengths are the column lengths in CustomerAddresses
+public record AddressRequest(
+        @NotBlank @Size(max = 255) String streetAddress,
+        @Size(max = 20) String postalCode,
+        @NotBlank @Size(max = 100) String city,
+        @Size(max = 100) String country
+) {
+}

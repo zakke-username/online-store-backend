@@ -35,4 +35,8 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     Optional<Order> findForUpdateByIdAndCustomerId(Integer id, Integer customerId);
+
+    boolean existsByCustomerId(Integer customerId);
+
+    boolean existsByShippingAddressId(Integer addressId);
 }

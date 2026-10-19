@@ -1,4 +1,3 @@
-
 DROP TABLE IF EXISTS OrderItems;
 DROP TABLE IF EXISTS Orders;
 DROP TABLE IF EXISTS Products;
@@ -35,7 +34,6 @@ CREATE TABLE CustomerAddresses (
         FOREIGN KEY (customer_id) REFERENCES Customers(id)
 );
 
--- SupplierAddresses
 CREATE TABLE SupplierAddresses (
     id INT AUTO_INCREMENT PRIMARY KEY,
     supplier_id INT NOT NULL,
@@ -74,6 +72,9 @@ CREATE TABLE Orders (
     delivery_date DATETIME,
     shipping_address_id INT,
     status VARCHAR(50) DEFAULT 'NEW',
+    INDEX idx_orders_customer_date (customer_id, order_date),
+    INDEX idx_orders_order_date (order_date),
+    INDEX idx_orders_status_date (status, order_date),
     CONSTRAINT fk_order_customer
         FOREIGN KEY (customer_id) REFERENCES Customers(id),
     CONSTRAINT fk_order_shipping_address
