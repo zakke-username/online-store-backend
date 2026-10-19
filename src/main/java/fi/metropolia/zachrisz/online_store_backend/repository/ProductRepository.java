@@ -13,6 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
@@ -34,4 +35,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     // SELECT ... FOR UPDATE: other transactions wait for these rows until this transaction ends
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     List<Product> findForUpdateByIdIn(Collection<Integer> ids);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    Optional<Product> findForUpdateById(Integer id);
 }

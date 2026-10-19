@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "Orders")
@@ -33,15 +34,27 @@ public class Order {
     @Column(name = "status", length = 50)
     private OrderStatus status;
 
-    @ElementCollection
-    @CollectionTable(name = "OrderItems", joinColumns = @JoinColumn(name = "order_id"))
+    // orphanRemoval: an item removed from this list is deleted from OrderItems
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();
 
     public Order() {
     }
 
-    public void addItem(Product product, int quantity, BigDecimal unitPrice) {
-        items.add(new OrderItem(product, quantity, unitPrice));
+    public OrderItem addItem(Product product, int quantity, BigDecimal unitPrice) {
+        OrderItem item = new OrderItem(this, product, quantity, unitPrice);
+        items.add(item);
+        return item;
+    }
+
+    public Optional<OrderItem> findItem(Integer productId) {
+        return items.stream()
+                .filter(item -> item.getProduct().getId().equals(productId))
+                .findFirst();
+    }
+
+    public void removeItem(OrderItem item) {
+        items.remove(item);
     }
 
     public BigDecimal getTotal() {

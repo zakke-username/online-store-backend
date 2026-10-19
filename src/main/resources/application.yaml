@@ -16,6 +16,10 @@ spring:
       ddl-auto: validate
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        # Lazy collections and references are loaded for up to 100 rows per query instead of one by one
+        default_batch_fetch_size: 100
   data:
     web:
       pageable:

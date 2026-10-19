@@ -34,9 +34,9 @@ public class ProductController {
         return productService.search(categoryId, q, minPrice, maxPrice, inStock, pageable);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ProductResponse> getProductById(@PathVariable Integer id) {
-        return productService.findById(id)
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductResponse> getProductById(@PathVariable Integer productId) {
+        return productService.findById(productId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

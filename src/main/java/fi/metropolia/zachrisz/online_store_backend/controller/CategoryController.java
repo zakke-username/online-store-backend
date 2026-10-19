@@ -29,16 +29,16 @@ public class CategoryController {
         return categoryService.findAll();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CategoryResponse> getCategoryById(@PathVariable Integer id) {
-        return categoryService.findById(id)
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<CategoryResponse> getCategoryById(@PathVariable Integer categoryId) {
+        return categoryService.findById(categoryId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/{id}/products")
-    public ResponseEntity<List<ProductResponse>> getProductsByCategory(@PathVariable Integer id) {
-        return productService.findByCategoryId(id)
+    @GetMapping("/{categoryId}/products")
+    public ResponseEntity<List<ProductResponse>> getProductsByCategory(@PathVariable Integer categoryId) {
+        return productService.findByCategoryId(categoryId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

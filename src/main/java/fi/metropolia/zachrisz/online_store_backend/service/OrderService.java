@@ -2,7 +2,6 @@ package fi.metropolia.zachrisz.online_store_backend.service;
 
 import fi.metropolia.zachrisz.online_store_backend.dto.OrderRequest;
 import fi.metropolia.zachrisz.online_store_backend.dto.OrderResponse;
-import fi.metropolia.zachrisz.online_store_backend.dto.OrderSummaryResponse;
 import fi.metropolia.zachrisz.online_store_backend.entity.Customer;
 import fi.metropolia.zachrisz.online_store_backend.entity.CustomerAddress;
 import fi.metropolia.zachrisz.online_store_backend.entity.Order;
@@ -27,6 +26,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -49,14 +49,15 @@ public class OrderService {
         this.productRepository = productRepository;
     }
 
+    // An order of another customer is treated as not found
     @Transactional(readOnly = true)
-    public Optional<OrderResponse> findById(Integer id) {
-        return orderRepository.findWithItemsById(id).map(OrderResponse::from);
+    public Optional<OrderResponse> findById(Integer customerId, Integer orderId) {
+        return orderRepository.findWithItemsByIdAndCustomerId(orderId, customerId).map(OrderResponse::from);
     }
 
     @Transactional(readOnly = true)
-    public Optional<Page<OrderSummaryResponse>> findByCustomerId(Integer customerId, OrderStatus status,
-                                                                 Pageable pageable) {
+    public Optional<Page<OrderResponse>> findByCustomerId(Integer customerId, OrderStatus status,
+                                                          Pageable pageable) {
         if (!customerRepository.existsById(customerId)) {
             return Optional.empty();
         }
@@ -65,7 +66,8 @@ public class OrderService {
         Pageable newestFirst = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
                 Sort.by(Sort.Direction.DESC, "orderDate", "id"));
 
-        return Optional.of(orderRepository.findSummariesByCustomerId(customerId, status, newestFirst));
+        return Optional.of(orderRepository.findByCustomerId(customerId, status, newestFirst)
+                .map(OrderResponse::from));
     }
 
     // The write methods lock rows (SELECT ... FOR UPDATE). READ COMMITTED lets a transaction that waited for
@@ -105,12 +107,8 @@ public class OrderService {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                         "Product " + item.productId() + " not found");
             }
-            if (product.getStockQuantity() < item.quantity()) {
-                throw new ResponseStatusException(HttpStatus.CONFLICT,
-                        "Not enough stock for product " + product.getId() + " (" + product.getStockQuantity() + " left)");
-            }
 
-            product.setStockQuantity(product.getStockQuantity() - item.quantity());
+            takeFromStock(product, item.quantity());
             // The current price is copied, so later price changes don't affect this order
             order.addItem(product, item.quantity(), product.getPrice());
         }
@@ -119,11 +117,8 @@ public class OrderService {
     }
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    public OrderResponse cancel(Integer orderId) {
-        // Locked so two simultaneous cancel requests can't both put the items back into stock
-        Order order = orderRepository.findForUpdateById(orderId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Order " + orderId + " not found"));
+    public OrderResponse cancel(Integer customerId, Integer orderId) {
+        Order order = lockOrder(customerId, orderId);
 
         if (order.getStatus() != OrderStatus.NEW && order.getStatus() != OrderStatus.PROCESSING) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
@@ -144,9 +139,91 @@ public class OrderService {
         return OrderResponse.from(order);
     }
 
+    @Transactional(readOnly = true)
+    public Optional<List<OrderResponse.Item>> findItems(Integer customerId, Integer orderId) {
+        return findById(customerId, orderId).map(OrderResponse::items);
+    }
+
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public OrderResponse.Item addItem(Integer customerId, Integer orderId, OrderRequest.Item request) {
+        Order order = lockNewOrder(customerId, orderId);
+        if (order.findItem(request.productId()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Product " + request.productId() + " is already in order " + orderId);
+        }
+
+        Product product = productRepository.findForUpdateById(request.productId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "Product " + request.productId() + " not found"));
+        takeFromStock(product, request.quantity());
+        // The current price is copied, so later price changes don't affect this order
+        return OrderResponse.Item.from(order.addItem(product, request.quantity(), product.getPrice()));
+    }
+
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public OrderResponse.Item changeItemQuantity(Integer customerId, Integer orderId, Integer productId,
+                                                 int quantity) {
+        Order order = lockNewOrder(customerId, orderId);
+        OrderItem item = findItem(order, productId);
+        Product product = productRepository.findForUpdateById(productId).orElseThrow();
+
+        // Only the difference is taken from stock; a smaller quantity returns items to stock.
+        // The price stays the one copied when the product was added.
+        takeFromStock(product, quantity - item.getQuantity());
+        item.setQuantity(quantity);
+        return OrderResponse.Item.from(item);
+    }
+
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public void removeItem(Integer customerId, Integer orderId, Integer productId) {
+        Order order = lockNewOrder(customerId, orderId);
+        OrderItem item = findItem(order, productId);
+        // An order can't be left empty; the customer can cancel it instead
+        if (order.getItems().size() == 1) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Product " + productId + " is the last item of order " + orderId + "; cancel the order instead");
+        }
+
+        Product product = productRepository.findForUpdateById(productId).orElseThrow();
+        product.setStockQuantity(product.getStockQuantity() + item.getQuantity());
+        order.removeItem(item);
+    }
+
+    // Locking the order row means changes to the same order (cancelling it, changing its items) happen one
+    // at a time. The order is always locked before its products, so these transactions can't deadlock.
+    private Order lockOrder(Integer customerId, Integer orderId) {
+        return orderRepository.findForUpdateByIdAndCustomerId(orderId, customerId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Customer " + customerId + " has no order " + orderId));
+    }
+
+    private Order lockNewOrder(Integer customerId, Integer orderId) {
+        Order order = lockOrder(customerId, orderId);
+        if (order.getStatus() != OrderStatus.NEW) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Order " + orderId + " is " + order.getStatus() + " and its items can't be changed");
+        }
+        return order;
+    }
+
+    private OrderItem findItem(Order order, Integer productId) {
+        return order.findItem(productId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Product " + productId + " is not in order " + order.getId()));
+    }
+
     // Locking the product rows means two orders can't sell the same stock at the same time
     private Map<Integer, Product> lockProducts(Collection<Integer> ids) {
         return productRepository.findForUpdateByIdIn(ids).stream()
                 .collect(Collectors.toMap(Product::getId, Function.identity()));
+    }
+
+    // The product must be locked
+    private void takeFromStock(Product product, int quantity) {
+        if (product.getStockQuantity() < quantity) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Not enough stock for product " + product.getId() + " (" + product.getStockQuantity() + " left)");
+        }
+        product.setStockQuantity(product.getStockQuantity() - quantity);
     }
 }
