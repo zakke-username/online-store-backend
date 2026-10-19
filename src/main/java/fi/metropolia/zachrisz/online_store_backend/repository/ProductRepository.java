@@ -1,14 +1,17 @@
 package fi.metropolia.zachrisz.online_store_backend.repository;
 
 import fi.metropolia.zachrisz.online_store_backend.entity.Product;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
@@ -27,4 +30,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             """)
     Page<Product> search(Integer categoryId, String q, BigDecimal minPrice, BigDecimal maxPrice,
                          boolean inStock, Pageable pageable);
+
+    // SELECT ... FOR UPDATE: other transactions wait for these rows until this transaction ends
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    List<Product> findForUpdateByIdIn(Collection<Integer> ids);
 }

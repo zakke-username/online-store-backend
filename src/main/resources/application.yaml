@@ -20,5 +20,8 @@ spring:
     web:
       pageable:
         serialization-mode: via-dto
+  mvc:
+    problemdetails:
+      enabled: true
 server:
   port: 8081
