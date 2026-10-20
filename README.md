@@ -14,7 +14,7 @@ Projektin keskeinen tarkoitus on kuitenkin demonstroida relaatiotietokannan suun
 
 **Päätepisteiden dokumentaatio: [API_DOC.md](API_DOC.md)**
 
-## Tietokanta
+## Tietokanta ja toteutettuja ominaisuuksia
 
 Taustapalvelu käyttää paikallisesti toimivaa MariaDB-relaatiotietokantaa. Tietokannan skeema pohjautuu kurssimateriaaleissa ja projektikansion dokumenteista löytyvään skriptiin. Tietokannassa ja sen suunnittelussa on hyödynnetty useita kurssilla läpi käytyjä ominaisuuksia ja toiminnallisuuksia, kuten indeksointia, transaktioita, samanaikaisuuden hallintaa, näkymiä, proseduureja ja liipaisimia.
 
