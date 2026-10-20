@@ -68,9 +68,7 @@ public class OrderService {
                 .map(OrderResponse::from));
     }
 
-    // The write methods lock rows (SELECT ... FOR UPDATE). READ COMMITTED lets a transaction that waited for
-    // a lock read the row's latest committed state. Under MariaDB's default REPEATABLE READ, the waiting
-    // transaction would fail with "Record has changed since last read" instead.
+    // Read-lukko
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public OrderResponse placeOrder(Integer customerId, OrderRequest request) {
         Customer customer = customerRepository.findById(customerId)

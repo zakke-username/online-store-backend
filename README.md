@@ -4,11 +4,13 @@ Tietokantaratkaisut-kurssin projektityö.
 
 ## Rajapinnan tavoite ja laajuus
 
-Tämän tietokantaratkaisut-kurssin projektityön tavoite on toteuttaa toimiva Java/Spring Boot -pohjainen demo web-taustapalvelusta ja APIsta. 
+Tämän tietokantaratkaisut-kurssin projektityön tavoite on toteuttaa toimiva Java/Spring Boot -pohjainen demo web-taustapalvelusta ja APIsta. Rajapinta palvelee lähinnä asiakkaan näkökulmasta verkkokauppaa, ja kaikki olennaiset siihen liittyvät päätepisteet ja toiminnallisuudet on toteutettu.
 
-Tämä rajapinta palvelee lähinnä loppukäyttäjän näkökulmasta verkkokauppaa, ja olennaiset siihen liittyvät päätepisteet on toteutettu. Projektissa on tietoisesti, tehtävänannon mukaisesti, jätetty pois selvästi ylläpidollisia päätepisteitä ja toiminnallisuuksia (esimerkiksi tuotekatalogiin lisääminen ja poistaminen), jotka eivät ole verkkokaupan asiakkaalle relevantteja. Ohjeistuksen mukaisesti myöskään kirjautumista (authentication/authorization) ei ole toteutettu: todellisuudessa asiakkaat tietenkin todentaisivat itsensä päästäkseen päätepisteiden resursseihin käsiksi.
+API yhdistelee myös useissa päätepisteissä tietokannan eri tauluja ja koostaa näistä mielekkään vastauksen loppukäyttäjälle: esimerkkinä `GET /api/products/popular`, joka yhdistää taulut Products, ProductCategories, OrderItems, Orders sekä näkymän ProductCatalog. Myös useat muut GET-pyynnöt yhdistelevät eri tauluja.
 
-Projektin keskeinen tarkoitus on kuitenkin demonstroida tietokantojen suunnittelua ja niiden sujuvaa käyttöä taustapalvelun pohjalla, mikä on toteutettu tehtävänannon mukaisesti. Spring-frameworkiin liittyviä tietokantakirjastoja ja olio-relaatiomallinnusta on käytetty tehokkaasti ja oikeaoppisesti. Taustapalvelu on REST-pohjainen ja se toteuttaa olennaiset ja vaaditut CRUD-päätepisteet.
+Laajuus ja näkökulma on siis tehtävänannon mukaisesti rajattu, joten projektissa on tietoisesti jätetty pois selvästi ylläpidollisia päätepisteitä ja toiminnallisuuksia (esimerkiksi tuotekatalogiin lisääminen ja poistaminen), jotka eivät ole verkkokaupan asiakkaalle relevantteja. Ohjeistuksen mukaisesti myöskään kirjautumista (authentication/authorization) ei ole toteutettu: todellisuudessa asiakkaat tietenkin todentaisivat itsensä päästäkseen päätepisteiden resursseihin käsiksi.
+
+Projektin keskeinen tarkoitus on kuitenkin demonstroida relaatiotietokannan suunnittelua ja sen sujuvaa käyttöä taustapalvelun pohjalla, mikä on toteutettu perusteellisesti. Spring-frameworkiin liittyviä tietokantakirjastoja ja olio-relaatiomallinnusta on käytetty tehokkaasti ja oikeaoppisesti. Taustapalvelu on REST-pohjainen ja se toteuttaa kaikki olennaiset ja vaaditut CRUD-päätepisteet.
 
 **Päätepisteiden dokumentaatio: [API_DOC.md](API_DOC.md)**
 
