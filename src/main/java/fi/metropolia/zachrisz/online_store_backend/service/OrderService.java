@@ -177,9 +177,7 @@ public class OrderService {
         order.removeItem(item);
     }
 
-    // Locking the order row means changes to the same order (cancelling it, changing its items) happen one
-    // at a time. The order is always locked before its products (cancel_order too), so these transactions
-    // can't deadlock.
+    // order is locked before its products: no deadlock
     private Order lockNewOrder(Integer customerId, Integer orderId) {
         Order order = orderRepository.findForUpdateByIdAndCustomerId(orderId, customerId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -197,13 +195,12 @@ public class OrderService {
                         "Product " + productId + " is not in order " + order.getId()));
     }
 
-    // Locking the product rows means two orders can't sell the same stock at the same time
+    // lock the product rows
     private Map<Integer, Product> lockProducts(Collection<Integer> ids) {
         return productRepository.findForUpdateByIdIn(ids).stream()
                 .collect(Collectors.toMap(Product::getId, Function.identity()));
     }
 
-    // The product must be locked
     private void takeFromStock(Product product, int quantity) {
         if (product.getStockQuantity() < quantity) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,

@@ -37,7 +37,6 @@ public class ProductController {
         return productService.search(categoryId, q, minPrice, maxPrice, inStock, pageable);
     }
 
-    // Bestsellers. "popular" is matched before {productId}, because a fixed path wins over a variable.
     @GetMapping("/popular")
     public List<PopularProductResponse> getPopularProducts(@RequestParam(defaultValue = "30") @Positive int days,
                                                            @RequestParam(defaultValue = "10") @Positive int limit) {

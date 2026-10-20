@@ -28,7 +28,6 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    // Stand-in for logging in until authentication exists
     @GetMapping
     public ResponseEntity<CustomerResponse> getCustomerByEmail(@RequestParam String email) {
         return customerService.findByEmail(email)

@@ -15,8 +15,6 @@ import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-    // The items can't be fetched here, because Hibernate can't page a query that fetches a collection.
-    // They are loaded for the whole page at once instead (default_batch_fetch_size in application.yaml).
     @EntityGraph(attributePaths = "shippingAddress")
     @Query("""
             SELECT o FROM Order o

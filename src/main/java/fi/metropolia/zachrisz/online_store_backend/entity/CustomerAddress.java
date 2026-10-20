@@ -26,7 +26,7 @@ public class CustomerAddress {
     @Column(name = "country", length = 100)
     private String country;
 
-    // Optimistic locking: Hibernate adds "AND version = ?" to every UPDATE and increases the version
+    // Optimistic locking
     @Version
     @Column(name = "version", nullable = false)
     private int version;

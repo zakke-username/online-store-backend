@@ -51,8 +51,7 @@ public class CustomerService {
     @Transactional
     public CustomerResponse update(Integer customerId, CustomerRequest request) {
         Customer customer = findCustomer(customerId);
-        // Optimistic locking: if the customer has been saved since the client read it, saving the client's
-        // copy would undo those changes
+        // Optimistic locking
         if (request.version() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "version is required");
         }
@@ -65,20 +64,16 @@ public class CustomerService {
         }
 
         copyFields(request, customer);
-        // Flushing runs the UPDATE now, so the response has the new version
         return CustomerResponse.from(customerRepository.saveAndFlush(customer));
     }
 
     @Transactional
     public void delete(Integer customerId) {
         Customer customer = findCustomer(customerId);
-        // Orders are kept as history, so a customer with orders can't be deleted
         if (orderRepository.existsByCustomerId(customerId)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
                     "Customer " + customerId + " has orders and can't be deleted");
         }
-
-        // Without orders, none of the customer's addresses are used by an order
         customerAddressRepository.deleteByCustomerId(customerId);
         customerRepository.delete(customer);
     }

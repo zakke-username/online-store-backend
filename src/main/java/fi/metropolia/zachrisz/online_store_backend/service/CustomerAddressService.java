@@ -61,8 +61,7 @@ public class CustomerAddressService {
     @Transactional
     public AddressResponse update(Integer customerId, Integer addressId, AddressRequest request) {
         CustomerAddress address = findUnusedAddress(customerId, addressId);
-        // Optimistic locking: if the address has been saved since the client read it, saving the client's
-        // copy would undo those changes
+        // Optimistic locking
         if (request.version() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "version is required");
         }
@@ -70,9 +69,7 @@ public class CustomerAddressService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Address " + addressId
                     + " has changed since version " + request.version() + "; get it again and retry");
         }
-
         copyFields(request, address);
-        // Flushing runs the UPDATE now, so the response has the new version
         return AddressResponse.from(customerAddressRepository.saveAndFlush(address));
     }
 
@@ -81,8 +78,6 @@ public class CustomerAddressService {
         customerAddressRepository.delete(findUnusedAddress(customerId, addressId));
     }
 
-    // Orders point to the address row instead of a copy of it, so changing an address that an order uses
-    // would also change where that order was shipped
     private CustomerAddress findUnusedAddress(Integer customerId, Integer addressId) {
         CustomerAddress address = customerAddressRepository.findByIdAndCustomerId(addressId, customerId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,

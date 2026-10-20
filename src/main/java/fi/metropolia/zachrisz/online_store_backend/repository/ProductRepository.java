@@ -33,7 +33,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Page<Product> search(Integer categoryId, String q, BigDecimal minPrice, BigDecimal maxPrice,
                          boolean inStock, Pageable pageable);
 
-    // SELECT ... FOR UPDATE: other transactions wait for these rows until this transaction ends
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     List<Product> findForUpdateByIdIn(Collection<Integer> ids);
 

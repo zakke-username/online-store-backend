@@ -23,8 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-// There is no login, so the customer is identified by the id in the path.
-// Every endpoint checks that the order belongs to that customer (404 otherwise).
+// no login so the customer is identified by the id in the path
 @RestController
 @RequestMapping("/api/orders/customer/{customerId}")
 public class OrderController {

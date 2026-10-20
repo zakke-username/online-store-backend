@@ -24,7 +24,92 @@ Tietokannan SQL-skriptit:
 
 ### Relaatiokaavio
 
-[kuva]
+```mermaid
+erDiagram
+    Customers {
+        INT id PK
+        VARCHAR first_name
+        VARCHAR last_name
+        VARCHAR email UK
+        VARCHAR phone
+        INT version
+        DATETIME updated_at
+    }
+    CustomerAddresses {
+        INT id PK
+        INT customer_id FK
+        VARCHAR street_address
+        VARCHAR postal_code
+        VARCHAR city
+        VARCHAR country
+        INT version
+        DATETIME updated_at
+    }
+    Suppliers {
+        INT id PK
+        VARCHAR name
+        VARCHAR contact_name
+        VARCHAR phone
+        VARCHAR email
+        DATETIME updated_at
+    }
+    SupplierAddresses {
+        INT id PK
+        INT supplier_id FK
+        VARCHAR street_address
+        VARCHAR postal_code
+        VARCHAR city
+        VARCHAR country
+        DATETIME updated_at
+    }
+    ProductCategories {
+        INT id PK
+        VARCHAR name
+        TEXT description
+        DATETIME updated_at
+    }
+    Products {
+        INT id PK
+        VARCHAR name
+        TEXT description
+        DECIMAL price
+        INT stock_quantity
+        INT category_id FK
+        INT supplier_id FK
+        DATETIME updated_at
+    }
+    Orders {
+        INT id PK
+        INT customer_id FK
+        DATETIME order_date
+        DATETIME delivery_date
+        INT shipping_address_id FK
+        VARCHAR status
+        DATETIME updated_at
+    }
+    OrderItems {
+        INT order_id PK, FK
+        INT product_id PK, FK
+        INT quantity
+        DECIMAL unit_price
+        DATETIME updated_at
+    }
+    OrderLog {
+        INT order_id PK "Orders.id, ei vierasavainta"
+        DECIMAL total
+        DATETIME placed_at
+        DATETIME updated_at
+    }
+
+    Customers ||..o{ CustomerAddresses : "customer_id"
+    Customers ||..o{ Orders : "customer_id"
+    CustomerAddresses |o..o{ Orders : "shipping_address_id"
+    Orders ||--o{ OrderItems : "order_id"
+    Products ||--o{ OrderItems : "product_id"
+    ProductCategories |o..o{ Products : "category_id"
+    Suppliers |o..o{ Products : "supplier_id"
+    Suppliers ||..o{ SupplierAddresses : "supplier_id"
+```
 
 ### Indeksointi
 

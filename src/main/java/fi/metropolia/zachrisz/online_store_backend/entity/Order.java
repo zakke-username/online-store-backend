@@ -21,7 +21,6 @@ public class Order {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    // Set by the database (DEFAULT CURRENT_TIMESTAMP). Hibernate leaves it out of the INSERT and reads it back.
     @Generated
     @Column(name = "order_date", nullable = false, updatable = false)
     private LocalDateTime orderDate;
@@ -37,7 +36,7 @@ public class Order {
     @Column(name = "status", length = 50)
     private OrderStatus status;
 
-    // orphanRemoval: an item removed from this list is deleted from OrderItems
+    // item removed from this list is deleted from OrderItems
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();
 
